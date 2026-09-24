@@ -2,7 +2,7 @@
 
 ChromaMapper is a premium, web-based configurator utility for CH57x hardware macropads. It allows you to program standard keys, Digital Audio Workstation (DAW) presets, multimedia keys, and system LED backlight animations directly via WebHID in your browser—without needing to install clunky desktop software.
 
-Created and Developed by [Justin Ray](https://jray.me).
+Created and Developed by [Justin Ray](https://trustnodelogic.com) at [Trust Node Logic](https://trustnodelogic.com).
 
 ## Features
 
@@ -29,5 +29,5 @@ Created and Developed by [Justin Ray](https://jray.me).
 ## Acknowledgments
 
 - **Author:** Justin Ray
-- **Website:** [https://jray.me](https://jray.me)
+- **Website:** [https://trustnodelogic.com](https://trustnodelogic.com)
 - **Copyright:** © 2026 ChromaMapper. All rights reserved.
