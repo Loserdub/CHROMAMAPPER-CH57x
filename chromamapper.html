@@ -1,0 +1,2335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChromaMapper - Premium CH57x Macropad Configurator</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="ChromaMapper is a premium CH57x-based macro keypad configurator. Design, save, and flash custom key shortcuts, DAW profiles, media keys, and LED backlight effects directly in your web browser via WebHID. Created by Justin Ray.">
+  <meta name="keywords" content="CH57x, Macropad, Configurator, Keypad Mapper, WebHID keyboard, Ableton Live shortcuts, Logic Pro, FL Studio macro, RGB Backlight Studio, Justin Ray, ChromaMapper">
+  <meta name="author" content="Justin Ray">
+  <link rel="canonical" href="https://jray.me" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jray.me">
+  <meta property="og:title" content="ChromaMapper - Premium CH57x Macropad Configurator">
+  <meta property="og:description" content="Design, save, and flash custom key shortcuts, DAW profiles, media keys, and LED backlight effects directly in your browser. Created by Justin Ray.">
+  <meta property="og:image" content="https://jray.me/og-image.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://jray.me">
+  <meta property="twitter:title" content="ChromaMapper - Premium CH57x Macropad Configurator">
+  <meta property="twitter:description" content="Design, save, and flash custom key shortcuts, DAW profiles, media keys, and LED backlight effects directly in your browser. Created by Justin Ray.">
+  <meta property="twitter:image" content="https://jray.me/og-image.png">
+
+  <!-- JSON-LD Structured Data Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "ChromaMapper",
+    "url": "https://jray.me",
+    "description": "A premium web-based configurator utility for CH57x hardware macropads, enabling users to program standard keys, DAW presets, and system LED backlight animations directly via WebHID in their browser.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "author": {
+      "@type": "Person",
+      "name": "Justin Ray",
+      "url": "https://jray.me"
+    },
+    "copyrightHolder": {
+      "@type": "Person",
+      "name": "Justin Ray"
+    },
+    "copyrightYear": "2026",
+    "features": [
+      "WebHID direct hardware flashing",
+      "Standard Keyboard Modifier Chord mapping",
+      "Digital Audio Workstation presets for Ableton Live, Logic Pro, and FL Studio",
+      "Multimedia key configuration",
+      "LED Backlight mode controls"
+    ]
+  }
+  </script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Premium CSS Variables & Custom Theme */
+    :root {
+      --bg-primary: #0a0b10;
+      --bg-secondary: #12141f;
+      --bg-glass: rgba(18, 20, 31, 0.7);
+      --border-glass: rgba(255, 255, 255, 0.08);
+      --accent-pink: #ff007f;
+      --accent-blue: #00f0ff;
+      --accent-purple: #8b5cf6;
+      --accent-green: #10b981;
+      --accent-yellow: #f59e0b;
+      --accent-red: #ef4444;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --glow-pink: 0 0 20px rgba(255, 0, 127, 0.4);
+      --glow-blue: 0 0 20px rgba(0, 240, 255, 0.4);
+      --transition-standard: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg-primary);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(255, 0, 127, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 240, 255, 0.05) 0%, transparent 40%);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--border-glass);
+      backdrop-filter: blur(10px);
+      background: rgba(10, 11, 16, 0.5);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-icon {
+      width: 2.2rem;
+      height: 2.2rem;
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--glow-pink);
+    }
+
+    .logo-icon svg {
+      width: 1.25rem;
+      height: 1.25rem;
+      fill: white;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      background: linear-gradient(to right, #ffffff, #a78bfa, var(--accent-blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .device-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-glass);
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: var(--transition-standard);
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--accent-red);
+      box-shadow: 0 0 10px var(--accent-red);
+    }
+
+    .device-badge.connected {
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+
+    .device-badge.connected .badge-dot {
+      background-color: var(--accent-green);
+      box-shadow: 0 0 10px var(--accent-green);
+    }
+
+    .main-container {
+      flex: 1;
+      max-width: 1400px;
+      width: 100%;
+      margin: 2rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 2.5rem;
+    }
+
+    @media (max-width: 1024px) {
+      .main-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--bg-glass);
+      border: 1px solid var(--border-glass);
+      border-radius: 20px;
+      padding: 2rem;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-pink), var(--accent-blue), transparent);
+      opacity: 0.5;
+    }
+
+    .panel-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Layer Tabs Styling */
+    .tabs-container {
+      display: flex;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border-glass);
+      padding: 0.25rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+    }
+
+    .tab-button {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.75rem 1rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: var(--transition-standard);
+    }
+
+    .tab-button:hover {
+      color: var(--text-main);
+    }
+
+    .tab-button.active {
+      background: linear-gradient(135deg, rgba(255, 0, 127, 0.15), rgba(0, 240, 255, 0.15));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Interactive Hardware Macropad Layout */
+    .macropad-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      padding: 1rem 0;
+    }
+
+    .physical-pad {
+      background: linear-gradient(145deg, #1b1e2c, #11131c);
+      border: 4px solid #23273a;
+      border-radius: 28px;
+      padding: 2rem;
+      width: 440px;
+      box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        var(--led-glow, 0 0 0 transparent);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      position: relative;
+      transition: var(--transition-standard);
+    }
+
+    /* 3 Dials Layout */
+    .dials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      justify-items: center;
+    }
+
+    .rotary-dial {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative;
+    }
+
+    .dial-knob {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #3a3f58 0%, #171924 100%);
+      border: 3px solid #2d3145;
+      box-shadow: 
+        0 8px 16px rgba(0, 0, 0, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.05);
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition-standard);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dial-knob::before {
+      content: '';
+      position: absolute;
+      width: 6px;
+      height: 20px;
+      background: var(--accent-blue);
+      border-radius: 3px;
+      top: 6px;
+      left: calc(50% - 3px);
+      box-shadow: var(--glow-blue);
+      transform-origin: 3px 30px;
+      transition: transform 0.5s ease-out;
+    }
+
+    .dial-knob.active {
+      border-color: var(--accent-blue);
+      box-shadow: var(--glow-blue);
+    }
+
+    .dial-actions {
+      display: flex;
+      gap: 0.25rem;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 2px;
+      border-radius: 8px;
+    }
+
+    .dial-action-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .dial-action-btn.active {
+      background: var(--accent-blue);
+      color: #000;
+    }
+
+    /* 12 Keys Grid Layout */
+    .keys-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+
+    .key-cap {
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, #2d3145 0%, #1e2130 100%);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      box-shadow: 
+        0 6px 0 #141620,
+        0 12px 20px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+
+    .key-cap:active {
+      transform: translateY(4px);
+      box-shadow: 
+        0 2px 0 #141620,
+        0 0 10px var(--led-active-glow, transparent),
+        0 4px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .key-cap:active .led-lens {
+      background: var(--led-active-color, #475569) !important;
+      box-shadow: var(--led-active-glow, none) !important;
+    }
+
+    .key-cap.selected {
+      background: linear-gradient(135deg, rgba(255, 0, 127, 0.15) 0%, rgba(255, 0, 127, 0.05) 100%);
+      border: 2px solid var(--accent-pink);
+      box-shadow: 
+        0 6px 0 #141620,
+        0 0 15px rgba(255, 0, 127, 0.3);
+    }
+
+    .key-cap .led-lens {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #475569;
+      position: absolute;
+      top: 10px;
+    }
+
+    .key-cap.selected .led-lens {
+      background: var(--accent-pink);
+      box-shadow: var(--glow-pink);
+    }
+
+    .key-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      position: absolute;
+      top: 8px;
+      left: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      pointer-events: none;
+    }
+
+    .key-cap.selected .key-label {
+      color: var(--accent-pink);
+    }
+
+    .key-sub-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #94a3b8;
+      margin-top: 8px;
+      max-width: 90%;
+      text-align: center;
+      word-break: break-word;
+      line-height: 1.25;
+    }
+
+    .key-cap.selected .key-sub-label {
+      color: #ffffff;
+    }
+
+    /* Right Panel Inspector Form */
+    .editor-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    input, select, textarea {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border-glass);
+      color: var(--text-main);
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: var(--transition-standard);
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.15);
+    }
+
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+    }
+
+    .checkbox-card {
+      background: rgba(0, 0, 0, 0.15);
+      border: 1px solid var(--border-glass);
+      padding: 0.75rem;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: var(--transition-standard);
+    }
+
+    .checkbox-card input {
+      display: none;
+    }
+
+    .checkbox-card span {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .checkbox-card.checked {
+      background: rgba(0, 240, 255, 0.1);
+      border-color: var(--accent-blue);
+    }
+
+    .checkbox-card.checked span {
+      color: var(--accent-blue);
+    }
+
+    /* Macro Builder Steps */
+    .macro-steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-height: 250px;
+      overflow-y: auto;
+      background: rgba(0, 0, 0, 0.15);
+      border: 1px solid var(--border-glass);
+      padding: 1rem;
+      border-radius: 12px;
+    }
+
+    .macro-step {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr auto;
+      gap: 0.75rem;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 0.5rem;
+      border-radius: 8px;
+    }
+
+    .macro-step-mods {
+      display: flex;
+      gap: 0.2rem;
+    }
+
+    .mod-badge {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-glass);
+      color: var(--text-muted);
+      padding: 0.2rem 0.4rem;
+      font-size: 0.65rem;
+      font-weight: 700;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .mod-badge.active {
+      background: rgba(255, 0, 127, 0.15);
+      border-color: var(--accent-pink);
+      color: var(--accent-pink);
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition-standard);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+      color: #white;
+      box-shadow: var(--glow-pink);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(255, 0, 127, 0.6);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-glass);
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-connect {
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      color: #000;
+      font-weight: 700;
+      box-shadow: var(--glow-blue);
+    }
+
+    .btn-connect:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(0, 240, 255, 0.6);
+    }
+
+    /* LED Studio Dashboard */
+    .led-controls-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .color-swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+    }
+
+    .color-swatch {
+      width: 100%;
+      aspect-ratio: 1.5;
+      border-radius: 8px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: var(--transition-standard);
+      position: relative;
+    }
+
+    .color-swatch.active {
+      border-color: #fff;
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .swatch-label {
+      position: absolute;
+      bottom: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+      pointer-events: none;
+    }
+
+    /* Logger Console Terminals */
+    .console-wrapper {
+      margin-top: 2rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .console-header {
+      background: #11131e;
+      border: 1px solid var(--border-glass);
+      border-bottom: none;
+      padding: 0.75rem 1rem;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .console-body {
+      background: #05060b;
+      border: 1px solid var(--border-glass);
+      padding: 1rem;
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+      height: 180px;
+      overflow-y: auto;
+      font-size: 0.8rem;
+      color: #a78bfa;
+      line-height: 1.5;
+    }
+
+    .console-line {
+      margin-bottom: 0.4rem;
+      word-break: break-all;
+    }
+
+    .console-line.sent {
+      color: var(--accent-blue);
+    }
+
+    .console-line.info {
+      color: var(--text-muted);
+    }
+
+    .console-line.success {
+      color: var(--accent-green);
+    }
+
+    .console-line.error {
+      color: var(--accent-red);
+    }
+
+    .action-row {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    /* Recording styles */
+    .record-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      transition: var(--transition-standard);
+      z-index: 5;
+    }
+
+    .record-btn:hover {
+      background: rgba(255, 0, 127, 0.15);
+      border-color: var(--accent-pink);
+      color: var(--accent-pink);
+      transform: scale(1.15);
+    }
+
+    .record-btn.recording {
+      background: var(--accent-red) !important;
+      border-color: var(--accent-red) !important;
+      color: #fff !important;
+      box-shadow: 0 0 12px var(--accent-red) !important;
+      animation: pulse-rec 1.2s infinite alternate;
+    }
+
+    .key-cap.recording {
+      border-color: var(--accent-red) !important;
+      box-shadow: 
+        0 6px 0 #141620,
+        0 0 20px rgba(239, 68, 68, 0.6) !important;
+    }
+
+    @keyframes pulse-rec {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(1.2); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="https://jray.me" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;" title="Visit Justin Ray's Website">
+      <div class="logo-container">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M19,10H5V9H19V10M19,12H5V11H19V12M19,14H5V13H19V14M19,16H5V15H19V16M21,6H3A2,2 0 0,0 1,8V18A2,2 0 0,0 3,20H21A2,2 0 0,0 23,18V8A2,2 0 0,0 21,6Z"/>
+          </svg>
+        </div>
+        <div>
+          <h1>ChromaMapper</h1>
+          <p style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">Premium CH57x Macropad Configurator</p>
+        </div>
+      </div>
+    </a>
+    
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <button class="btn btn-connect" id="connectBtn">Connect Device</button>
+      <div class="device-badge" id="deviceBadge">
+        <div class="badge-dot"></div>
+        <span id="badgeText">Disconnected</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="main-container">
+    
+    <!-- Left Column: Virtual Macropad Visualizer -->
+    <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div class="panel-title">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" style="color: var(--accent-pink);">
+            <path d="M4 5h16v14H4V5zm2 2v10h12V7H6z"/>
+          </svg>
+          Interactive Macropad Canvas
+        </div>
+        
+        <div class="tabs-container">
+          <button class="tab-button active" onclick="selectLayer(0)">Layer 1</button>
+          <button class="tab-button" onclick="selectLayer(1)">Layer 2</button>
+          <button class="tab-button" onclick="selectLayer(2)">Layer 3</button>
+        </div>
+
+        <div class="macropad-wrapper">
+          <div class="physical-pad">
+            <!-- Dials/Knobs -->
+            <div class="dials-grid">
+              <div class="rotary-dial" id="dial-0">
+                <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted);">Knob 1</span>
+                <div class="dial-knob" onclick="selectControl('knob', 0)"></div>
+                <div class="dial-actions">
+                  <button class="dial-action-btn" onclick="selectKnobAction(0, 'ccw', event)">CCW</button>
+                  <button class="dial-action-btn active" onclick="selectKnobAction(0, 'press', event)">Press</button>
+                  <button class="dial-action-btn" onclick="selectKnobAction(0, 'cw', event)">CW</button>
+                </div>
+              </div>
+              
+              <div class="rotary-dial" id="dial-1">
+                <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted);">Knob 2</span>
+                <div class="dial-knob" onclick="selectControl('knob', 1)"></div>
+                <div class="dial-actions">
+                  <button class="dial-action-btn" onclick="selectKnobAction(1, 'ccw', event)">CCW</button>
+                  <button class="dial-action-btn active" onclick="selectKnobAction(1, 'press', event)">Press</button>
+                  <button class="dial-action-btn" onclick="selectKnobAction(1, 'cw', event)">CW</button>
+                </div>
+              </div>
+
+              <div class="rotary-dial" id="dial-2">
+                <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted);">Knob 3</span>
+                <div class="dial-knob" onclick="selectControl('knob', 2)"></div>
+                <div class="dial-actions">
+                  <button class="dial-action-btn" onclick="selectKnobAction(2, 'ccw', event)">CCW</button>
+                  <button class="dial-action-btn active" onclick="selectKnobAction(2, 'press', event)">Press</button>
+                  <button class="dial-action-btn" onclick="selectKnobAction(2, 'cw', event)">CW</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Keys Grid -->
+            <div class="keys-grid">
+              <div class="key-cap selected" onclick="selectControl('key', 0)"><div class="led-lens"></div><button class="record-btn" onclick="toggleRecord('key', 0, event)" id="rec-key-0" title="Record Shortcut">●</button><span class="key-label">K1</span><span class="key-sub-label" id="lbl-key-0">Empty</span></div>
+              <div class="key-cap" onclick="selectControl('key', 1)"><div class="led-lens"></div><button class="record-btn" onclick="toggleRecord('key', 1, event)" id="rec-key-1" title="Record Shortcut">●</button><span class="key-label">K2</span><span class="key-sub-label" id="lbl-key-1">Empty</span></div>
+              <div class="key-cap" onclick="selectControl('key', 2)"><div class="led-lens"></div><button class="record-btn" onclick="toggleRecord('key', 2, event)" id="rec-key-2" title="Record Shortcut">●</button><span class="key-label">K3</span><span class="key-sub-label" id="lbl-key-2">Empty</span></div>
+              
+              <div class="key-cap" onclick="selectControl('key', 3)"><div class="led-lens"></div><button class="record-btn" onclick="toggleRecord('key', 3, event)" id="rec-key-3" title="Record Shortcut">●</button><span class="key-label">K4</span><span class="key-sub-label" id="lbl-key-3">Empty</span></div>
+              <div class="key-cap" onclick="selectControl('key', 4)"><div class="led-lens"></div><button class="record-btn" onclick="toggleRecord('key', 4, event)" id="rec-key-4" title="Record Shortcut">●</button><span class="key-label">K5</span><span class="key-sub-label" id="lbl-key-4">Empty</span></div>
+              <div class="key-cap" onclick="selectControl('key', 5)"><div class="led-lens"></div><button class="record-btn" onclick="toggleRecord('key', 5, event)" id="rec-key-5" title="Record Shortcut">●</button><span class="key-label">K6</span><span class="key-sub-label" id="lbl-key-5">Empty</span></div>
+              
+              <div class="key-cap" onclick="selectControl('key', 6)"><div class="led-lens"></div><button class="record-btn" onclick="toggleRecord('key', 6, event)" id="rec-key-6" title="Record Shortcut">●</button><span class="key-label">K7</span><span class="key-sub-label" id="lbl-key-6">Empty</span></div>
+              <div class="key-cap" onclick="selectControl('key', 7)"><div class="led-lens"></div><button class="record-btn" onclick="toggleRecord('key', 7, event)" id="rec-key-7" title="Record Shortcut">●</button><span class="key-label">K8</span><span class="key-sub-label" id="lbl-key-7">Empty</span></div>
+              <div class="key-cap" onclick="selectControl('key', 8)"><div class="led-lens"></div><button class="record-btn" onclick="toggleRecord('key', 8, event)" id="rec-key-8" title="Record Shortcut">●</button><span class="key-label">K9</span><span class="key-sub-label" id="lbl-key-8">Empty</span></div>
+              
+              <div class="key-cap" onclick="selectControl('key', 9)"><div class="led-lens"></div><button class="record-btn" onclick="toggleRecord('key', 9, event)" id="rec-key-9" title="Record Shortcut">●</button><span class="key-label">K10</span><span class="key-sub-label" id="lbl-key-9">Empty</span></div>
+              <div class="key-cap" onclick="selectControl('key', 10)"><div class="led-lens"></div><button class="record-btn" onclick="toggleRecord('key', 10, event)" id="rec-key-10" title="Record Shortcut">●</button><span class="key-label">K11</span><span class="key-sub-label" id="lbl-key-10">Empty</span></div>
+              <div class="key-cap" onclick="selectControl('key', 11)"><div class="led-lens"></div><button class="record-btn" onclick="toggleRecord('key', 11, event)" id="rec-key-11" title="Record Shortcut">●</button><span class="key-label">K12</span><span class="key-sub-label" id="lbl-key-11">Empty</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LED Global Settings -->
+      <div style="border-top: 1px solid var(--border-glass); padding-top: 1.5rem; margin-top: 1.5rem;">
+        <div style="font-size: 0.95rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color: var(--accent-pink);">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+          </svg>
+          LED Backlight Studio
+        </div>
+        
+        <div class="led-controls-grid" style="display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1.5rem;">
+          <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.5rem;">
+            <div class="control-group">
+              <label>Lighting Effect Mode</label>
+              <select id="ledModeSelect" onchange="updateLEDConfig()">
+                <option value="off">Off (Zero Power)</option>
+                <option value="backlight">Always On Backlight</option>
+                <option value="shock">Reactive Ripple (Shock)</option>
+                <option value="shock2">Reactive Flare (Shock 2)</option>
+                <option value="press">Instant Trigger (Press Highlight)</option>
+              </select>
+            </div>
+            
+            <div class="control-group">
+              <label>Color Presets</label>
+              <div class="color-swatch-grid">
+                <div class="color-swatch active" style="background-color: #ffffff;" onclick="selectLedColor(0, this)"><span class="swatch-label">WHITE</span></div>
+                <div class="color-swatch" style="background-color: #ef4444;" onclick="selectLedColor(1, this)"><span class="swatch-label">RED</span></div>
+                <div class="color-swatch" style="background-color: #f97316;" onclick="selectLedColor(2, this)"><span class="swatch-label">ORANGE</span></div>
+                <div class="color-swatch" style="background-color: #eab308;" onclick="selectLedColor(3, this)"><span class="swatch-label">YELLOW</span></div>
+                <div class="color-swatch" style="background-color: #22c55e;" onclick="selectLedColor(4, this)"><span class="swatch-label">GREEN</span></div>
+                <div class="color-swatch" style="background-color: #06b6d4;" onclick="selectLedColor(5, this)"><span class="swatch-label">CYAN</span></div>
+                <div class="color-swatch" style="background-color: #3b82f6;" onclick="selectLedColor(6, this)"><span class="swatch-label">BLUE</span></div>
+                <div class="color-swatch" style="background-color: #a855f7;" onclick="selectLedColor(7, this)"><span class="swatch-label">PURPLE</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: flex-end; margin-top: 1rem;">
+          <button class="btn btn-secondary" onclick="applyLED()">Write Layer LED Effect</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Column: Inspector & Form Controller -->
+    <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+      <div class="editor-section">
+        <div class="panel-title" style="margin-bottom: 0.75rem;">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color: var(--accent-blue);">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+          </svg>
+          Configure Target Element: <span id="selectedElementLabel" style="color: var(--accent-blue); margin-left: 0.25rem;">Button 1</span>
+        </div>
+
+        <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-glass); padding-bottom: 1.5rem;">
+          <button class="btn btn-secondary" style="flex: 1;" onclick="clearMapping()">Reset Key</button>
+          <button class="btn btn-primary" style="flex: 2;" id="saveBtn">Apply & Program Key</button>
+        </div>
+
+        <div class="control-group">
+          <label>Mapping Macro Type</label>
+          <select id="macroTypeSelect" onchange="toggleMacroTypeForm()">
+            <option value="keyboard">Standard Keyboard Key & Combos</option>
+            <option value="daw">Digital Audio Workstation (D.A.W.s)</option>
+            <option value="webai">WEB & AI Navigation & Tasks</option>
+            <option value="media">Multimedia & Program Controls</option>
+            <option value="mouse">Mouse Actions & Offsets</option>
+          </select>
+        </div>
+
+        <!-- FORM 1: Keyboard Key Editor -->
+        <div id="keyboardForm" class="macro-form-subset">
+          <div class="control-group" style="margin-bottom: 1rem;">
+            <label>Modifiers Chord</label>
+            <div class="checkbox-grid">
+              <label class="checkbox-card" id="lbl-mod-ctrl">
+                <input type="checkbox" id="mod-ctrl" onchange="updateModifierState('ctrl')"><span>CTRL</span>
+              </label>
+              <label class="checkbox-card" id="lbl-mod-shift">
+                <input type="checkbox" id="mod-shift" onchange="updateModifierState('shift')"><span>SHIFT</span>
+              </label>
+              <label class="checkbox-card" id="lbl-mod-alt">
+                <input type="checkbox" id="mod-alt" onchange="updateModifierState('alt')"><span>ALT</span>
+              </label>
+              <label class="checkbox-card" id="lbl-mod-win">
+                <input type="checkbox" id="mod-win" onchange="updateModifierState('win')"><span>WIN</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="control-group" style="margin-bottom: 1rem;">
+            <label>Target Keycode</label>
+            <select id="keyCodeSelect">
+              <!-- Dynamically populated in JavaScript -->
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label>Input Delay (Optional)</label>
+            <input type="number" id="keyDelayInput" min="0" max="6000" placeholder="0" style="width: 100%;">
+            <span style="font-size: 0.75rem; color: var(--text-muted);">Max 6000ms. Delay before executing action.</span>
+          </div>
+        </div>
+
+        <!-- FORM 4: DAW Presets Editor -->
+        <div id="dawForm" class="macro-form-subset" style="display: none;">
+          <div class="control-group" style="margin-bottom: 1rem;">
+            <label>Select DAW</label>
+            <select id="dawSelect" onchange="updateDawPresets()">
+              <option value="logic">Logic Pro</option>
+              <option value="ableton">Ableton Live</option>
+              <option value="fl">FL Studio</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label>DAW Preset Action</label>
+            <select id="dawPresetSelect" onchange="onDawPresetChange()">
+              <!-- Dynamically populated in JavaScript -->
+            </select>
+          </div>
+        </div>
+
+        <!-- FORM 5: WEB & AI Presets Editor -->
+        <div id="webaiForm" class="macro-form-subset" style="display: none;">
+          <div class="control-group" style="margin-bottom: 1rem;">
+            <label>Select Category</label>
+            <select id="webaiCategorySelect" onchange="updateWebAiPresets()">
+              <option value="web">Browser & Web Navigation</option>
+              <option value="ai">AI Companion & Automation</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label>Preset Action</label>
+            <select id="webaiPresetSelect" onchange="onWebAiPresetChange()">
+              <!-- Dynamically populated in JavaScript -->
+            </select>
+          </div>
+        </div>
+
+        <!-- FORM 2: Media Preset Editor -->
+        <div id="mediaForm" class="macro-form-subset" style="display: none;">
+          <div class="control-group">
+            <label>Select Media Function</label>
+            <select id="mediaSelect">
+              <option value="0xe9">Volume Up</option>
+              <option value="0xea">Volume Down</option>
+              <option value="0xe2">Mute System Volume</option>
+              <option value="0xcd">Play / Pause Toggle</option>
+              <option value="0xb5">Next Track</option>
+              <option value="0xb6">Previous Track</option>
+              <option value="0xb7">Stop Audio Playback</option>
+              <option value="0x192">Launch Calculator</option>
+              <option value="0x19e">Lock Screen</option>
+              <option value="0x182">Open Browser Favorites</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- FORM 3: Mouse Action Editor -->
+        <div id="mouseForm" class="macro-form-subset" style="display: none;">
+          <div class="control-group" style="margin-bottom: 1rem;">
+            <label>Mouse Action Type</label>
+            <select id="mouseActionSelect" onchange="toggleMouseFields()">
+              <option value="click">Mouse Button Click</option>
+              <option value="move">Move Cursor (dx, dy)</option>
+              <option value="scroll">Scroll Wheel Action</option>
+              <option value="drag">Click and Drag Cursor</option>
+            </select>
+          </div>
+
+          <!-- Mouse Buttons Field -->
+          <div id="mouseBtnGroup" class="control-group" style="margin-bottom: 1rem;">
+            <label>Mouse Button(s)</label>
+            <div class="checkbox-grid">
+              <label class="checkbox-card" id="lbl-mouse-left">
+                <input type="checkbox" id="mouse-left" onchange="updateMouseBtnState('left')"><span>LEFT</span>
+              </label>
+              <label class="checkbox-card" id="lbl-mouse-right">
+                <input type="checkbox" id="mouse-right" onchange="updateMouseBtnState('right')"><span>RIGHT</span>
+              </label>
+              <label class="checkbox-card" id="lbl-mouse-middle">
+                <input type="checkbox" id="mouse-middle" onchange="updateMouseBtnState('middle')"><span>MIDDLE</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Mouse Coordinates Fields -->
+          <div id="mouseCoordsGroup" class="control-group" style="display: none; margin-bottom: 1rem;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div>
+                <label>dx (X Offset)</label>
+                <input type="number" id="mouseDxInput" value="0" min="-127" max="127">
+              </div>
+              <div>
+                <label>dy (Y Offset)</label>
+                <input type="number" id="mouseDyInput" value="0" min="-127" max="127">
+              </div>
+            </div>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">Relative pixel movement. Range is -127 to 127.</span>
+          </div>
+
+          <!-- Mouse Scroll Field -->
+          <div id="mouseScrollGroup" class="control-group" style="display: none; margin-bottom: 1rem;">
+            <label>Scroll Wheel Delta</label>
+            <input type="number" id="mouseWheelInput" value="0" min="-127" max="127">
+            <span style="font-size: 0.75rem; color: var(--text-muted);">Positive for Scroll Up, Negative for Scroll Down.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Panel & Real-time Console Log -->
+      <div style="margin-top: 2rem;">
+        <div class="console-wrapper">
+          <div class="console-header">
+            <span>TRANSACTION CONTROLLER CONSOLE</span>
+            <span style="cursor: pointer; color: var(--accent-pink);" onclick="clearLogs()">Clear Logs</span>
+          </div>
+          <div class="console-body" id="logConsole">
+            <div class="console-line info">[System] Welcome to ChromaMapper WebHID Controller.</div>
+            <div class="console-line info">[System] Click "Connect Device" to pair with your CH57x-based macro keypad.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Global Constants and States
+    const VENDOR_ID = 0x1189;
+    const PRODUCT_IDS = [0x8842, 0x8840, 0x8890];
+    
+    let hidDevice = null;
+    let currentLayer = 0;
+    
+    // Recording features state variables
+    let recordingActive = false;
+    let recordingTarget = { type: null, index: null };
+    
+    // KeyboardEvent.code -> HID Scan Code mapping
+    const CODE_TO_HID = {
+      "KeyA": 4, "KeyB": 5, "KeyC": 6, "KeyD": 7, "KeyE": 8, "KeyF": 9, "KeyG": 10,
+      "KeyH": 11, "KeyI": 12, "KeyJ": 13, "KeyK": 14, "KeyL": 15, "KeyM": 16, "KeyN": 17,
+      "KeyO": 18, "KeyP": 19, "KeyQ": 20, "KeyR": 21, "KeyS": 22, "KeyT": 23, "KeyU": 24,
+      "KeyV": 25, "KeyW": 26, "KeyX": 27, "KeyY": 28, "KeyZ": 29,
+      "Digit1": 30, "Digit2": 31, "Digit3": 32, "Digit4": 33, "Digit5": 34,
+      "Digit6": 35, "Digit7": 36, "Digit8": 37, "Digit9": 38, "Digit0": 39,
+      "Enter": 40, "Escape": 41, "Backspace": 42, "Tab": 43, "Space": 44,
+      "Minus": 45, "Equal": 46, "BracketLeft": 47, "BracketRight": 48, "Backslash": 49,
+      "Semicolon": 51, "Quote": 52, "Backquote": 53, "Comma": 54, "Period": 55, "Slash": 56,
+      "CapsLock": 57,
+      "F1": 58, "F2": 59, "F3": 60, "F4": 61, "F5": 62, "F6": 63,
+      "F7": 64, "F8": 65, "F9": 66, "F10": 67, "F11": 68, "F12": 69,
+      "PrintScreen": 70, "ScrollLock": 71, "Pause": 72, "Insert": 73, "Home": 74,
+      "PageUp": 75, "Delete": 76, "End": 77, "PageDown": 78,
+      "ArrowRight": 79, "ArrowLeft": 80, "ArrowDown": 81, "ArrowUp": 82,
+      "NumLock": 83, "NumpadDivide": 84, "NumpadMultiply": 85, "NumpadSubtract": 86,
+      "NumpadAdd": 87, "NumpadEnter": 88, "Numpad1": 89, "Numpad2": 90, "Numpad3": 91,
+      "Numpad4": 92, "Numpad5": 93, "Numpad6": 94, "Numpad7": 95, "Numpad8": 96,
+      "Numpad9": 97, "Numpad0": 98, "NumpadDecimal": 99
+    };
+    
+    // Curated DAW presets mapping to modifier chords and HID keycodes
+    const DAW_PRESETS = {
+      logic: [
+        { name: "Play / Pause (Space)", modifiers: [], code: 44 }, // Spacebar
+        { name: "Record (R)", modifiers: [], code: 21 }, // R
+        { name: "Cycle On/Off (C)", modifiers: [], code: 6 }, // C
+        { name: "Mixer Window (X)", modifiers: [], code: 27 }, // X
+        { name: "Piano Roll (P)", modifiers: [], code: 19 }, // P
+        { name: "Undo (Cmd+Z)", modifiers: ["win"], code: 29 }, // Win/Cmd + Z
+        { name: "Save Project (Cmd+S)", modifiers: ["win"], code: 22 }, // Win/Cmd + S
+        { name: "Add Audio Track (Cmd+Opt+A)", modifiers: ["win", "alt"], code: 4 }, // Cmd + Opt + A
+        { name: "Add Instrument Track (Cmd+Opt+S)", modifiers: ["win", "alt"], code: 22 }, // Cmd + Opt + S
+        { name: "Split Region at Playhead (Cmd+T)", modifiers: ["win"], code: 23 } // Cmd + T
+      ],
+      ableton: [
+        { name: "Play / Stop (Space)", modifiers: [], code: 44 }, // Spacebar
+        { name: "Record (F9)", modifiers: [], code: 66 }, // F9
+        { name: "Draw Mode On/Off (B)", modifiers: [], code: 5 }, // B
+        { name: "Toggle Session/Arranger (Tab)", modifiers: [], code: 43 }, // Tab
+        { name: "Insert Audio Track (Ctrl+T)", modifiers: ["ctrl"], code: 23 }, // Ctrl + T
+        { name: "Insert MIDI Track (Ctrl+Shift+T)", modifiers: ["ctrl", "shift"], code: 23 }, // Ctrl + Shift + T
+        { name: "Loop Selection (Ctrl+L)", modifiers: ["ctrl"], code: 15 }, // Ctrl + L
+        { name: "Duplicate (Ctrl+D)", modifiers: ["ctrl"], code: 7 }, // Ctrl + D
+        { name: "Quantize (Ctrl+U)", modifiers: ["ctrl"], code: 24 }, // Ctrl + U
+        { name: "Back to Arrangement (F10)", modifiers: [], code: 67 } // F10
+      ],
+      fl: [
+        { name: "Play / Pause (Space)", modifiers: [], code: 44 }, // Spacebar
+        { name: "Start/Stop Recording (R)", modifiers: [], code: 21 }, // R
+        { name: "Pattern/Song Toggle (L)", modifiers: [], code: 15 }, // L
+        { name: "Playlist Window (F5)", modifiers: [], code: 62 }, // F5
+        { name: "Channel Rack (F6)", modifiers: [], code: 63 }, // F6
+        { name: "Piano Roll (F7)", modifiers: [], code: 64 }, // F7
+        { name: "Mixer Window (F8)", modifiers: [], code: 65 }, // F8
+        { name: "Clone Selection (Ctrl+B)", modifiers: ["ctrl"], code: 5 }, // Ctrl + B
+        { name: "Quick Quantize (Ctrl+Q)", modifiers: ["ctrl"], code: 20 }, // Ctrl + Q
+        { name: "Undo / Redo (Ctrl+Alt+Z)", modifiers: ["ctrl", "alt"], code: 29 } // Ctrl + Alt + Z
+      ]
+    };
+
+    // Curated Web & AI presets mapping to modifier chords and HID keycodes
+    const WEBAI_PRESETS = {
+      web: [
+        { name: "Browser: New Tab (Ctrl+T)", modifiers: ["ctrl"], code: 23 }, // T
+        { name: "Browser: Close Tab (Ctrl+W)", modifiers: ["ctrl"], code: 26 }, // W
+        { name: "Browser: Reopen Closed Tab (Ctrl+Shift+T)", modifiers: ["ctrl", "shift"], code: 23 }, // T
+        { name: "Browser: Focus Search Bar (Ctrl+L)", modifiers: ["ctrl"], code: 15 }, // L
+        { name: "Browser: Incognito Mode (Ctrl+Shift+N)", modifiers: ["ctrl", "shift"], code: 17 }, // N
+        { name: "Browser: Back (Alt+Left Arrow)", modifiers: ["alt"], code: 80 }, // Left Arrow
+        { name: "Browser: Forward (Alt+Right Arrow)", modifiers: ["alt"], code: 79 }, // Right Arrow
+        { name: "Browser: Reload Page (Ctrl+R)", modifiers: ["ctrl"], code: 21 }, // R
+        { name: "Browser: Open History (Ctrl+H)", modifiers: ["ctrl"], code: 11 }, // H
+        { name: "Browser: Open Downloads (Ctrl+J)", modifiers: ["ctrl"], code: 13 } // J
+      ],
+      ai: [
+        { name: "AI: Launch ChatGPT App (Alt+Space)", modifiers: ["alt"], code: 44 }, // Space
+        { name: "AI: Windows Copilot (Win+C)", modifiers: ["win"], code: 6 }, // C
+        { name: "AI: Voice Dictation (Win+H)", modifiers: ["win"], code: 11 }, // H
+        { name: "AI: ChatGPT Web Link (Win+Alt+C)", modifiers: ["win", "alt"], code: 6 }, // C
+        { name: "AI: Gemini Web Link (Win+Alt+G)", modifiers: ["win", "alt"], code: 10 }, // G
+        { name: "AI: Claude Web Link (Win+Alt+A)", modifiers: ["win", "alt"], code: 4 }, // A
+        { name: "AI: Sidebar Search/Explain (Ctrl+Shift+L)", modifiers: ["ctrl", "shift"], code: 15 } // L
+      ]
+    };
+    
+    // Tracks the active visual configuration type ('key' or 'knob')
+    let selectedType = 'key'; 
+    let selectedIndex = 0;
+    
+    // Knob rotation sub-action ccw / press / cw
+    let selectedKnobActions = [
+      'press', // Knob 0
+      'press', // Knob 1
+      'press'  // Knob 2
+    ];
+
+    // Core layer profiles containing key settings
+    let keyboardConfig = Array.from({ length: 3 }, () => ({
+      keys: Array.from({ length: 12 }, () => ({ type: 'empty', macro: null })),
+      knobs: Array.from({ length: 3 }, () => ({
+        ccw: { type: 'empty', macro: null },
+        press: { type: 'empty', macro: null },
+        cw: { type: 'empty', macro: null }
+      })),
+      led: { mode: 'backlight', color: 5, speed: 120 } // Default: Cyan Backlight
+    }));
+
+    // Standard Keyboard USB HID Keycodes
+    const HID_KEYCODES = [
+      { name: "None / Empty", value: 0 },
+      { name: "A", value: 4 },
+      { name: "B", value: 5 },
+      { name: "C", value: 6 },
+      { name: "D", value: 7 },
+      { name: "E", value: 8 },
+      { name: "F", value: 9 },
+      { name: "G", value: 10 },
+      { name: "H", value: 11 },
+      { name: "I", value: 12 },
+      { name: "J", value: 13 },
+      { name: "K", value: 14 },
+      { name: "L", value: 15 },
+      { name: "M", value: 16 },
+      { name: "N", value: 17 },
+      { name: "O", value: 18 },
+      { name: "P", value: 19 },
+      { name: "Q", value: 20 },
+      { name: "R", value: 21 },
+      { name: "S", value: 22 },
+      { name: "T", value: 23 },
+      { name: "U", value: 24 },
+      { name: "V", value: 25 },
+      { name: "W", value: 26 },
+      { name: "X", value: 27 },
+      { name: "Y", value: 28 },
+      { name: "Z", value: 29 },
+      { name: "1", value: 30 },
+      { name: "2", value: 31 },
+      { name: "3", value: 32 },
+      { name: "4", value: 33 },
+      { name: "5", value: 34 },
+      { name: "6", value: 35 },
+      { name: "7", value: 36 },
+      { name: "8", value: 37 },
+      { name: "9", value: 38 },
+      { name: "0", value: 39 },
+      { name: "Enter", value: 40 },
+      { name: "Escape", value: 41 },
+      { name: "Backspace", value: 42 },
+      { name: "Tab", value: 43 },
+      { name: "Spacebar", value: 44 },
+      { name: "Minus (-)", value: 45 },
+      { name: "Equal (=)", value: 46 },
+      { name: "Left Bracket ([)", value: 47 },
+      { name: "Right Bracket (])", value: 48 },
+      { name: "Backslash (\\)", value: 49 },
+      { name: "Semicolon (;)", value: 51 },
+      { name: "Apostrophe (')", value: 52 },
+      { name: "Grave / Tilde (`)", value: 53 },
+      { name: "Comma (,)", value: 54 },
+      { name: "Period (.)", value: 55 },
+      { name: "Slash (/)", value: 56 },
+      { name: "Caps Lock", value: 57 },
+      { name: "F1", value: 58 },
+      { name: "F2", value: 59 },
+      { name: "F3", value: 60 },
+      { name: "F4", value: 61 },
+      { name: "F5", value: 62 },
+      { name: "F6", value: 63 },
+      { name: "F7", value: 64 },
+      { name: "F8", value: 65 },
+      { name: "F9", value: 66 },
+      { name: "F10", value: 67 },
+      { name: "F11", value: 68 },
+      { name: "F12", value: 69 },
+      { name: "Print Screen", value: 70 },
+      { name: "Scroll Lock", value: 71 },
+      { name: "Pause / Break", value: 72 },
+      { name: "Insert", value: 73 },
+      { name: "Home", value: 74 },
+      { name: "Page Up", value: 75 },
+      { name: "Delete", value: 76 },
+      { name: "End", value: 77 },
+      { name: "Page Down", value: 78 },
+      { name: "Right Arrow", value: 79 },
+      { name: "Left Arrow", value: 80 },
+      { name: "Down Arrow", value: 81 },
+      { name: "Up Arrow", value: 82 },
+      { name: "Keypad Num Lock", value: 83 },
+      { name: "Keypad Slash (/)", value: 84 },
+      { name: "Keypad Asterisk (*)", value: 85 },
+      { name: "Keypad Minus (-)", value: 86 },
+      { name: "Keypad Plus (+)", value: 87 },
+      { name: "Keypad Enter", value: 88 },
+      { name: "Keypad 1", value: 89 },
+      { name: "Keypad 2", value: 90 },
+      { name: "Keypad 3", value: 91 },
+      { name: "Keypad 4", value: 92 },
+      { name: "Keypad 5", value: 93 },
+      { name: "Keypad 6", value: 94 },
+      { name: "Keypad 7", value: 95 },
+      { name: "Keypad 8", value: 96 },
+      { name: "Keypad 9", value: 97 },
+      { name: "Keypad 0", value: 98 },
+      { name: "Keypad Period (.)", value: 99 }
+    ];
+
+    // Initialize DOM
+    document.addEventListener("DOMContentLoaded", () => {
+      // Populate Keycodes
+      const select = document.getElementById("keyCodeSelect");
+      HID_KEYCODES.forEach(k => {
+        const opt = document.createElement("option");
+        opt.value = k.value;
+        opt.textContent = k.name;
+        select.appendChild(opt);
+      });
+
+      // Pair event listeners
+      document.getElementById("connectBtn").addEventListener("click", handleConnect);
+      document.getElementById("saveBtn").addEventListener("click", handleProgramActiveControl);
+      
+      // Listen for recording keydown events globally
+      window.addEventListener("keydown", handleRecordingKeydown, true);
+      
+      // Load selected key properties into inputs
+      selectControl('key', 0);
+      loadSavedConfig();
+      updateVirtualLEDs();
+      
+      // Initialize DAW presets
+      updateDawPresets();
+
+      // Initialize WEB & AI presets
+      updateWebAiPresets();
+    });
+
+    // --- Shortcuts Recording Logic ---
+    function toggleRecord(type, index, event) {
+      if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+
+      // If we are currently recording this exact button, click acts as a STOP/CANCEL action.
+      if (recordingActive && recordingTarget.type === type && recordingTarget.index === index) {
+        log(`Recording cancelled for Key ${index + 1}.`, "info");
+        stopRecording();
+        return;
+      }
+
+      // If we are recording another key, stop that one first
+      if (recordingActive) {
+        stopRecording();
+      }
+
+      // Start recording!
+      recordingActive = true;
+      recordingTarget = { type, index };
+
+      // Make sure this control is selected in the UI
+      selectControl(type, index);
+
+      // Add visual active states to keycap and record button
+      const keyCap = document.querySelectorAll(".key-cap")[index];
+      if (keyCap) {
+        keyCap.classList.add("recording");
+      }
+      
+      const recBtn = document.getElementById(`rec-key-${index}`);
+      if (recBtn) {
+        recBtn.classList.add("recording");
+        recBtn.textContent = "■"; // Square icon for stop
+      }
+
+      const lbl = document.getElementById(`lbl-key-${index}`);
+      if (lbl) {
+        lbl.textContent = "[Press Keys...]";
+      }
+
+      log(`Recording started for Button ${index + 1}... Press any keyboard combination. Click '●' again to cancel.`, "info");
+    }
+
+    function stopRecording() {
+      if (!recordingActive) return;
+
+      const index = recordingTarget.index;
+      
+      // Remove visual classes
+      const keyCap = document.querySelectorAll(".key-cap")[index];
+      if (keyCap) {
+        keyCap.classList.remove("recording");
+      }
+
+      const recBtn = document.getElementById(`rec-key-${index}`);
+      if (recBtn) {
+        recBtn.classList.remove("recording");
+        recBtn.textContent = "●"; // Restore circle icon
+      }
+
+      recordingActive = false;
+      recordingTarget = { type: null, index: null };
+
+      // Update the visual canvas labels to show what is stored
+      updateLabels();
+    }
+
+    function handleRecordingKeydown(e) {
+      if (!recordingActive) return;
+
+      // Prevent default action so pressing key combos doesn't trigger browser hotkeys
+      e.preventDefault();
+      e.stopPropagation();
+
+      const modifiers = {
+        ctrl: e.ctrlKey,
+        shift: e.shiftKey,
+        alt: e.altKey,
+        win: e.metaKey
+      };
+
+      // Check if it is a modifier key itself
+      const key = e.key;
+      const isModifierKey = ['Control', 'Shift', 'Alt', 'Meta'].includes(key);
+
+      // Display the keys pressed so far on the visual key-sub-label
+      const lbl = document.getElementById(`lbl-${recordingTarget.type}-${recordingTarget.index}`);
+      if (!lbl) return;
+      
+      let modParts = [];
+      if (modifiers.ctrl) modParts.push("CTRL");
+      if (modifiers.shift) modParts.push("SHIFT");
+      if (modifiers.alt) modParts.push("ALT");
+      if (modifiers.win) modParts.push("WIN");
+
+      if (isModifierKey) {
+        // Just show modifiers held so far
+        lbl.textContent = `[${modParts.join("+")}+...]`;
+        return;
+      }
+
+      // Non-modifier key is pressed!
+      const code = e.code;
+      const hidCode = CODE_TO_HID[code];
+
+      if (hidCode !== undefined) {
+        // We captured a valid HID code! Let's display it.
+        const keyName = HID_KEYCODES.find(k => k.value === hidCode)?.name || key.toUpperCase();
+        lbl.textContent = modParts.length > 0 ? `${modParts.join("+")}+${keyName}` : keyName;
+
+        // Apply these settings to the DOM inspector fields
+        document.getElementById("macroTypeSelect").value = "keyboard";
+        toggleMacroTypeForm();
+
+        // Update modifiers in the form
+        ['ctrl', 'shift', 'alt', 'win'].forEach(m => {
+          const chk = document.getElementById(`mod-${m}`);
+          if (chk) {
+            chk.checked = modifiers[m];
+            updateModifierState(m);
+          }
+        });
+
+        // Set target keycode in the select dropdown
+        document.getElementById("keyCodeSelect").value = hidCode;
+        document.getElementById("keyDelayInput").value = ""; // Default empty delay
+
+        // Log to console
+        log(`Recorded shortcut: ${modParts.length > 0 ? modParts.join("+") + ":" : ""}${keyName} (HID Scan Code: ${hidCode})`, "success");
+
+        // Automatically save to local session and program the device!
+        handleProgramActiveControl();
+
+        // Stop recording
+        stopRecording();
+      } else {
+        log(`Key code not mapped: ${code}. Try another standard key.`, "warning");
+        lbl.textContent = "[Unrecognized]";
+      }
+    }
+
+    // --- DAW Preset Management ---
+    function updateDawPresets() {
+      const daw = document.getElementById("dawSelect").value;
+      const select = document.getElementById("dawPresetSelect");
+      if (!select) return;
+      
+      select.innerHTML = "";
+      
+      const presets = DAW_PRESETS[daw] || [];
+      presets.forEach((p, idx) => {
+        const opt = document.createElement("option");
+        opt.value = idx;
+        opt.textContent = p.name;
+        select.appendChild(opt);
+      });
+      
+      onDawPresetChange();
+    }
+
+    function onDawPresetChange() {
+      const daw = document.getElementById("dawSelect").value;
+      const select = document.getElementById("dawPresetSelect");
+      if (!select) return;
+      
+      const idx = parseInt(select.value) || 0;
+      const preset = DAW_PRESETS[daw] ? DAW_PRESETS[daw][idx] : null;
+      if (preset) {
+        log(`DAW Preset selected: ${daw.toUpperCase()} -> ${preset.name}`, "info");
+      }
+    }
+
+    // --- WEB & AI Preset Management ---
+    function updateWebAiPresets() {
+      const cat = document.getElementById("webaiCategorySelect").value;
+      const select = document.getElementById("webaiPresetSelect");
+      if (!select) return;
+      
+      select.innerHTML = "";
+      
+      const presets = WEBAI_PRESETS[cat] || [];
+      presets.forEach((p, idx) => {
+        const opt = document.createElement("option");
+        opt.value = idx;
+        opt.textContent = p.name;
+        select.appendChild(opt);
+      });
+      
+      onWebAiPresetChange();
+    }
+
+    function onWebAiPresetChange() {
+      const cat = document.getElementById("webaiCategorySelect").value;
+      const select = document.getElementById("webaiPresetSelect");
+      if (!select) return;
+      
+      const idx = parseInt(select.value) || 0;
+      const preset = WEBAI_PRESETS[cat] ? WEBAI_PRESETS[cat][idx] : null;
+      if (preset) {
+        log(`WEB & AI Preset selected: ${cat.toUpperCase()} -> ${preset.name}`, "info");
+      }
+    }
+
+    // Helper functions for Logging to visual console
+    function log(message, type = 'info') {
+      const console = document.getElementById("logConsole");
+      const line = document.createElement("div");
+      line.className = `console-line ${type}`;
+      line.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      console.appendChild(line);
+      console.scrollTop = console.scrollHeight;
+    }
+
+    function clearLogs() {
+      document.getElementById("logConsole").innerHTML = '<div class="console-line info">[System] Console logs cleared.</div>';
+    }
+
+    // Connect to WebHID Keyboard
+    async function handleConnect() {
+      if (!("hid" in navigator)) {
+        log("Error: Your browser does not support WebHID. Please use Google Chrome or Microsoft Edge.", "error");
+        alert("WebHID API is not supported in this browser. Please switch to Google Chrome or Microsoft Edge.");
+        return;
+      }
+
+      log("Probing for compatible USB devices...", "info");
+      
+      try {
+        const devices = await navigator.hid.requestDevice({
+          filters: PRODUCT_IDS.map(pid => ({ vendorId: VENDOR_ID, productId: pid }))
+        });
+
+        if (devices.length === 0) {
+          log("No device selected.", "error");
+          return;
+        }
+
+        // Find the raw vendor-defined configuration interface (usagePage: 0xff00 or 65280)
+        const configDevice = devices.find(d => 
+          d.collections && d.collections.some(c => c.usagePage === 0xff00 || c.usagePage === 65280)
+        );
+
+        if (configDevice) {
+          hidDevice = configDevice;
+          log(`Selected raw configuration interface (Usage Page: 0xff00)`, "success");
+        } else {
+          hidDevice = devices[0];
+          log(`Warning: Raw config interface (0xff00) not detected. Defaulting to first endpoint.`, "warning");
+        }
+        
+        log(`Found device: ${hidDevice.productName} (VID: ${hidDevice.vendorId.toString(16)}, PID: ${hidDevice.productId.toString(16)})`, "info");
+        
+        await hidDevice.open();
+        log("Connection claimed successfully! Initiating handshake...", "success");
+
+        // Send a 64-byte initialization packet (all zeroes)
+        const initPayload = new Uint8Array(64);
+        await hidDevice.sendReport(0x03, initPayload);
+        log("USB handshake complete. Device ready for mapping.", "success");
+
+        // Load active bank configuration profile backup
+        log("Reading current bank configuration settings...", "info");
+        loadSavedConfig();
+
+        // Update UI
+        document.getElementById("badgeText").textContent = "Connected";
+        document.getElementById("deviceBadge").className = "device-badge connected";
+        document.getElementById("connectBtn").textContent = "Disconnect";
+        document.getElementById("connectBtn").className = "btn btn-secondary";
+        document.getElementById("connectBtn").onclick = handleDisconnect;
+
+      } catch (err) {
+        log(`Connection Error: ${err.message}`, "error");
+        console.error(err);
+      }
+    }
+
+    async function handleDisconnect() {
+      if (hidDevice) {
+        await hidDevice.close();
+        hidDevice = null;
+        log("Device disconnected safely.", "info");
+        
+        document.getElementById("badgeText").textContent = "Disconnected";
+        document.getElementById("deviceBadge").className = "device-badge";
+        document.getElementById("connectBtn").textContent = "Connect Device";
+        document.getElementById("connectBtn").className = "btn btn-connect";
+        document.getElementById("connectBtn").onclick = handleConnect;
+      }
+    }
+
+    // Visual elements control and selection
+    function selectLayer(layerIdx) {
+      currentLayer = layerIdx;
+      
+      // Update UI active tab state
+      document.querySelectorAll(".tab-button").forEach((btn, idx) => {
+        btn.classList.toggle("active", idx === layerIdx);
+      });
+
+      log(`Switched layout view to Layer ${layerIdx + 1}`, "info");
+      
+      // Reload UI visual badges on the virtual keys
+      updateLabels();
+      
+      // Select the first key of the newly selected layer
+      selectControl(selectedType, selectedIndex);
+
+      // Load LED color/mode active indicators
+      const layerConfig = keyboardConfig[currentLayer];
+      document.getElementById("ledModeSelect").value = layerConfig.led.mode;
+
+      // Update swatches active highlights
+      const colorIdx = layerConfig.led.color;
+      const swatches = document.querySelectorAll(".color-swatch");
+      swatches.forEach((swatch, idx) => {
+        swatch.classList.toggle("active", idx === colorIdx);
+      });
+
+      updateVirtualLEDs();
+    }
+
+    function selectControl(type, index) {
+      selectedType = type;
+      selectedIndex = index;
+
+      // Update Key CAPS selections visual highlights
+      document.querySelectorAll(".key-cap").forEach((cap, idx) => {
+        cap.classList.toggle("selected", type === 'key' && idx === index);
+      });
+
+      document.querySelectorAll(".dial-knob").forEach((knob, idx) => {
+        knob.classList.toggle("active", type === 'knob' && idx === index);
+      });
+
+      // Update UI text label of the selected control
+      const label = document.getElementById("selectedElementLabel");
+      if (type === 'key') {
+        label.textContent = `Button ${index + 1}`;
+      } else {
+        const actionStr = selectedKnobActions[index].toUpperCase();
+        label.textContent = `Knob ${index + 1} (${actionStr})`;
+      }
+
+      // Load existing configuration properties
+      loadControlConfig(type, index);
+    }
+
+    function selectKnobAction(knobIdx, action, event) {
+      // Prevent dial click trigger when pressing buttons
+      event.stopPropagation();
+
+      selectedKnobActions[knobIdx] = action;
+      
+      // Update CCW/CW active buttons styling
+      const dialDiv = document.getElementById(`dial-${knobIdx}`);
+      dialDiv.querySelectorAll(".dial-action-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.textContent.toLowerCase() === action);
+      });
+
+      selectControl('knob', knobIdx);
+    }
+
+    // Modifiers & state toggles
+    function updateModifierState(mod) {
+      const card = document.getElementById(`lbl-mod-${mod}`);
+      const chk = document.getElementById(`mod-${mod}`);
+      card.classList.toggle("checked", chk.checked);
+    }
+
+    function updateMouseBtnState(btn) {
+      const card = document.getElementById(`lbl-mouse-${btn}`);
+      const chk = document.getElementById(`mouse-${btn}`);
+      card.classList.toggle("checked", chk.checked);
+    }
+
+    function toggleMacroTypeForm() {
+      const type = document.getElementById("macroTypeSelect").value;
+      
+      document.getElementById("keyboardForm").style.display = type === "keyboard" ? "block" : "none";
+      document.getElementById("dawForm").style.display = type === "daw" ? "block" : "none";
+      document.getElementById("webaiForm").style.display = type === "webai" ? "block" : "none";
+      document.getElementById("mediaForm").style.display = type === "media" ? "block" : "none";
+      document.getElementById("mouseForm").style.display = type === "mouse" ? "block" : "none";
+    }
+
+    function toggleMouseFields() {
+      const act = document.getElementById("mouseActionSelect").value;
+      
+      document.getElementById("mouseBtnGroup").style.display = (act === "click" || act === "drag") ? "block" : "none";
+      document.getElementById("mouseCoordsGroup").style.display = (act === "move" || act === "drag") ? "block" : "none";
+      document.getElementById("mouseScrollGroup").style.display = act === "scroll" ? "block" : "none";
+    }
+
+    function selectLedColor(colorIdx, swatchElement) {
+      // Toggle active visual highlight
+      document.querySelectorAll(".color-swatch").forEach(s => s.classList.remove("active"));
+      swatchElement.classList.add("active");
+      
+      keyboardConfig[currentLayer].led.color = colorIdx;
+      log(`LED Backlight Color chosen: swatched index ${colorIdx}`, "info");
+      updateVirtualLEDs();
+    }
+
+    function updateLEDConfig() {
+      keyboardConfig[currentLayer].led.mode = document.getElementById("ledModeSelect").value;
+      updateVirtualLEDs();
+    }
+
+    function hexToRgb(hex) {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : { r: 6, g: 182, b: 212 };
+    }
+
+    const COLOR_PALETTE = {
+      0: { name: "White", hex: "#ffffff", rgb: "255, 255, 255" },
+      1: { name: "Red", hex: "#ff3e3e", rgb: "255, 62, 62" },
+      2: { name: "Orange", hex: "#ff923e", rgb: "255, 146, 62" },
+      3: { name: "Yellow", hex: "#fcd34d", rgb: "252, 211, 77" },
+      4: { name: "Green", hex: "#10b981", rgb: "16, 185, 129" },
+      5: { name: "Cyan", hex: "#06b6d4", rgb: "6, 182, 212" },
+      6: { name: "Blue", hex: "#3b82f6", rgb: "59, 130, 246" },
+      7: { name: "Purple", hex: "#a855f7", rgb: "168, 85, 247" }
+    };
+
+    function updateVirtualLEDs() {
+      const ledConfig = keyboardConfig[currentLayer].led;
+      const mode = ledConfig.mode;
+      
+      // Resolve swatch color
+      const colorInfo = COLOR_PALETTE[ledConfig.color] || COLOR_PALETTE[5];
+      const colorHex = colorInfo.hex;
+      const colorRgb = colorInfo.rgb;
+      
+      const pad = document.querySelector(".physical-pad");
+      if (!pad) return;
+
+      // 1. Off mode
+      if (mode === "off") {
+        pad.style.setProperty("--led-glow", "none");
+        document.querySelectorAll(".key-cap .led-lens").forEach(lens => {
+          lens.style.background = "#475569";
+          lens.style.boxShadow = "none";
+        });
+        document.querySelectorAll(".key-cap").forEach(cap => {
+          cap.style.boxShadow = "0 6px 0 #141620, 0 12px 20px rgba(0, 0, 0, 0.4)";
+        });
+      } 
+      // 2. Hardware backlight (Always On)
+      else if (mode === "backlight") {
+        pad.style.setProperty("--led-glow", `0 0 30px rgba(${colorRgb}, 0.25)`);
+        document.querySelectorAll(".key-cap .led-lens").forEach(lens => {
+          lens.style.background = colorHex;
+          lens.style.boxShadow = `0 0 10px ${colorHex}`;
+        });
+        document.querySelectorAll(".key-cap").forEach(cap => {
+          cap.style.boxShadow = `0 6px 0 #141620, 0 0 12px rgba(${colorRgb}, 0.25), 0 12px 20px rgba(0, 0, 0, 0.4)`;
+        });
+      } 
+      // 3. Hardware reactive modes (shock, shock2, press)
+      else if (mode === "shock" || mode === "shock2" || mode === "press") {
+        pad.style.setProperty("--led-glow", `0 0 15px rgba(${colorRgb}, 0.1)`);
+        document.querySelectorAll(".key-cap .led-lens").forEach(lens => {
+          lens.style.background = "#475569";
+          lens.style.boxShadow = "none";
+        });
+        document.querySelectorAll(".key-cap").forEach(cap => {
+          cap.style.boxShadow = "0 6px 0 #141620, 0 12px 20px rgba(0, 0, 0, 0.4)";
+        });
+      } 
+
+      // Inject variables for reactive click highlights
+      pad.style.setProperty("--led-active-color", colorHex);
+      pad.style.setProperty("--led-active-glow", `0 0 15px ${colorHex}`);
+    }
+
+    // Helper functions to populate labels on the visual Canvas
+    function updateLabels() {
+      for (let i = 0; i < 12; i++) {
+        const item = keyboardConfig[currentLayer].keys[i];
+        const lbl = document.getElementById(`lbl-key-${i}`);
+        
+        if (item.type === 'empty') {
+          lbl.textContent = 'Empty';
+        } else if (item.type === 'keyboard') {
+          const keyName = HID_KEYCODES.find(k => k.value === item.macro.code)?.name || 'Key';
+          lbl.textContent = item.macro.modifierStr ? `${item.macro.modifierStr}+${keyName}` : keyName;
+        } else if (item.type === 'media') {
+          const presets = {
+            "0xe9": "Vol Up", "0xea": "Vol Down", "0xe2": "Mute",
+            "0xcd": "Play", "0xb5": "Next", "0xb6": "Prev", "0xb7": "Stop",
+            "0x192": "Calc", "0x19e": "Lock", "0x182": "Favs"
+          };
+          lbl.textContent = presets[item.macro.hexCode] || 'Media';
+        } else if (item.type === 'daw') {
+          const dawName = item.macro.daw === 'logic' ? 'Logic' : item.macro.daw === 'ableton' ? 'Live' : 'FL';
+          const presetObj = DAW_PRESETS[item.macro.daw][item.macro.presetIdx];
+          const presetName = presetObj ? presetObj.name.split(" (")[0] : 'DAW';
+          lbl.textContent = `${dawName}: ${presetName}`;
+        } else if (item.type === 'webai') {
+          const prefix = item.macro.category === 'web' ? 'Web' : 'AI';
+          const presetObj = WEBAI_PRESETS[item.macro.category][item.macro.presetIdx];
+          const presetName = presetObj ? presetObj.name.split(" (")[0].replace("Browser: ", "").replace("AI: ", "") : 'WEB/AI';
+          lbl.textContent = `${prefix}: ${presetName}`;
+        }
+      }
+    }
+
+    // Loading/saving config settings
+    function loadControlConfig(type, index) {
+      let configItem;
+      if (type === 'key') {
+        configItem = keyboardConfig[currentLayer].keys[index];
+      } else {
+        const subAction = selectedKnobActions[index];
+        configItem = keyboardConfig[currentLayer].knobs[index][subAction];
+      }
+
+      if (configItem.type === 'empty') {
+        // Load default empty states
+        document.getElementById("macroTypeSelect").value = "keyboard";
+        
+        ['ctrl', 'shift', 'alt', 'win'].forEach(m => {
+          document.getElementById(`mod-${m}`).checked = false;
+          document.getElementById(`lbl-mod-${m}`).classList.remove("checked");
+        });
+        
+        document.getElementById("keyCodeSelect").value = 0;
+        document.getElementById("keyDelayInput").value = "";
+        
+        // Media default
+        document.getElementById("mediaSelect").value = "0xe9";
+        
+        // WebAI default
+        document.getElementById("webaiCategorySelect").value = "web";
+        updateWebAiPresets();
+        
+        // Mouse default
+        document.getElementById("mouseActionSelect").value = "click";
+        ['left', 'right', 'middle'].forEach(b => {
+          document.getElementById(`mouse-${b}`).checked = false;
+          document.getElementById(`lbl-mouse-${b}`).classList.remove("checked");
+        });
+        document.getElementById("mouseDxInput").value = 0;
+        document.getElementById("mouseDyInput").value = 0;
+        document.getElementById("mouseWheelInput").value = 0;
+
+      } else {
+        // Load existing mapping configurations into HTML controls
+        document.getElementById("macroTypeSelect").value = configItem.type;
+        
+        if (configItem.type === 'keyboard') {
+          const macro = configItem.macro;
+          ['ctrl', 'shift', 'alt', 'win'].forEach(m => {
+            const has = macro.modifiers.includes(m);
+            document.getElementById(`mod-${m}`).checked = has;
+            document.getElementById(`lbl-mod-${m}`).classList.toggle("checked", has);
+          });
+          document.getElementById("keyCodeSelect").value = macro.code;
+          document.getElementById("keyDelayInput").value = macro.delay || "";
+
+        } else if (configItem.type === 'media') {
+          document.getElementById("mediaSelect").value = configItem.macro.hexCode;
+
+        } else if (configItem.type === 'mouse') {
+          const macro = configItem.macro;
+          document.getElementById("mouseActionSelect").value = macro.action;
+          
+          ['left', 'right', 'middle'].forEach(b => {
+            const has = macro.buttons.includes(b);
+            document.getElementById(`mouse-${b}`).checked = has;
+            document.getElementById(`lbl-mouse-${b}`).classList.toggle("checked", has);
+          });
+          document.getElementById("mouseDxInput").value = macro.dx || 0;
+          document.getElementById("mouseDyInput").value = macro.dy || 0;
+          document.getElementById("mouseWheelInput").value = macro.wheel || 0;
+        } else if (configItem.type === 'daw') {
+          const macro = configItem.macro;
+          document.getElementById("dawSelect").value = macro.daw;
+          updateDawPresets();
+          document.getElementById("dawPresetSelect").value = macro.presetIdx;
+        } else if (configItem.type === 'webai') {
+          const macro = configItem.macro;
+          document.getElementById("webaiCategorySelect").value = macro.category;
+          updateWebAiPresets();
+          document.getElementById("webaiPresetSelect").value = macro.presetIdx;
+        }
+      }
+      
+      toggleMacroTypeForm();
+      toggleMouseFields();
+    }
+
+    function clearMapping() {
+      if (selectedType === 'key') {
+        keyboardConfig[currentLayer].keys[selectedIndex] = { type: 'empty', macro: null };
+      } else {
+        const action = selectedKnobActions[selectedIndex];
+        keyboardConfig[currentLayer].knobs[selectedIndex][action] = { type: 'empty', macro: null };
+      }
+      
+      log(`Cleared mapping settings for selected element locally.`, "info");
+      updateLabels();
+      loadControlConfig(selectedType, selectedIndex);
+    }
+
+    // Program mapping data to the device!
+    async function handleProgramActiveControl() {
+      // Validate inputs
+      const type = document.getElementById("macroTypeSelect").value;
+      let macro = {};
+
+      if (type === 'keyboard') {
+        const modifiers = [];
+        ['ctrl', 'shift', 'alt', 'win'].forEach(m => {
+          if (document.getElementById(`mod-${m}`).checked) modifiers.push(m);
+        });
+        const code = parseInt(document.getElementById("keyCodeSelect").value);
+        const delay = parseInt(document.getElementById("keyDelayInput").value) || 0;
+        
+        let modStr = modifiers.map(m => m.toUpperCase()).join("+");
+        
+        macro = { modifiers, code, delay, modifierStr: modStr };
+
+      } else if (type === 'daw') {
+        const daw = document.getElementById("dawSelect").value;
+        const presetIdx = parseInt(document.getElementById("dawPresetSelect").value) || 0;
+        const preset = DAW_PRESETS[daw] ? DAW_PRESETS[daw][presetIdx] : null;
+        if (preset) {
+          macro = {
+            daw,
+            presetIdx,
+            modifiers: preset.modifiers,
+            code: preset.code,
+            delay: 0
+          };
+        } else {
+          macro = { daw, presetIdx, modifiers: [], code: 0, delay: 0 };
+        }
+
+      } else if (type === 'webai') {
+        const category = document.getElementById("webaiCategorySelect").value;
+        const presetIdx = parseInt(document.getElementById("webaiPresetSelect").value) || 0;
+        const preset = WEBAI_PRESETS[category] ? WEBAI_PRESETS[category][presetIdx] : null;
+        if (preset) {
+          macro = {
+            category,
+            presetIdx,
+            modifiers: preset.modifiers,
+            code: preset.code,
+            delay: 0
+          };
+        } else {
+          macro = { category, presetIdx, modifiers: [], code: 0, delay: 0 };
+        }
+
+      } else if (type === 'media') {
+        const hexCode = document.getElementById("mediaSelect").value;
+        macro = { hexCode };
+
+      } else if (type === 'mouse') {
+        const action = document.getElementById("mouseActionSelect").value;
+        const buttons = [];
+        ['left', 'right', 'middle'].forEach(b => {
+          if (document.getElementById(`mouse-${b}`).checked) buttons.push(b);
+        });
+        const dx = parseInt(document.getElementById("mouseDxInput").value) || 0;
+        const dy = parseInt(document.getElementById("mouseDyInput").value) || 0;
+        const wheel = parseInt(document.getElementById("mouseWheelInput").value) || 0;
+
+        macro = { action, buttons, dx, dy, wheel };
+      }
+
+      // Save locally to session first
+      if (selectedType === 'key') {
+        keyboardConfig[currentLayer].keys[selectedIndex] = { type, macro };
+      } else {
+        const action = selectedKnobActions[selectedIndex];
+        keyboardConfig[currentLayer].knobs[selectedIndex][action] = { type, macro };
+      }
+
+      updateLabels();
+      log(`Applied settings locally. Beginning USB write transaction sequence...`, "info");
+
+      // Build USB packages and transmit via WebHID
+      if (!hidDevice) {
+        log(`Warning: Key saved locally, but no device connected. Pair a macropad to save directly to hardware memory.`, "warning");
+        return;
+      }
+
+      try {
+        // 1. Get Key ID
+        const keyId = getTargetKeyId();
+        log(`Writing key mapping configuration: Key ID ${keyId} on Layer ${currentLayer + 1}...`, "info");
+
+        // 2. Generate and send binding report
+        const bytesList = buildKeyBindingReportBytes(keyId, type, macro);
+        
+        // Send initial binding packet
+        await sendPacket(bytesList[0]);
+
+        // Send delay packet if applicable
+        if (bytesList.length > 1 && type === 'keyboard' && macro.delay > 0) {
+          await sendPacket(bytesList[1]);
+        }
+
+        // Commit transaction packets
+        log("Committing configuration flash transaction...", "info");
+        await sendPacket(buildCommitPacket1());
+        await sendPacket(buildCommitPacket2());
+        await sendPacket(buildCommitPacket3());
+
+        log(`SUCCESS! Device memory successfully written and mapped.`, "success");
+        saveLocalData(); // Persistent LocalStorage backup
+
+      } catch (err) {
+        log(`FAIL: USB Communication transmission error - ${err.message}`, "error");
+        console.error(err);
+      }
+    }
+
+    async function applyLED() {
+      if (!hidDevice) {
+        log(`Warning: LED config saved, but no USB hardware is currently paired to write to.`, "warning");
+        return;
+      }
+
+      try {
+        const ledConfig = keyboardConfig[currentLayer].led;
+        log(`Writing LED Backlight configuration for Layer ${currentLayer + 1}...`, "info");
+
+        let targetMode = ledConfig.mode;
+        const targetColor = ledConfig.color;
+
+        // 1. Map simulator-only modes to hardware backlight mode
+        if (['rainbow', 'pulse', 'strobe'].includes(targetMode)) {
+          targetMode = 'backlight';
+        }
+
+        // Calculate led mode code
+        const code = calculateLEDCode(targetMode, targetColor);
+        
+        // Build report
+        const report = new Uint8Array(64);
+        report[0] = 0xfe;
+        report[1] = 0xb0;
+        report[2] = currentLayer + 1;
+        report[3] = 0x08;
+        report[9] = 0x01;
+        report[11] = code;
+
+        // Send LED Report
+        await sendPacket(report);
+
+        // Commit sequence
+        await sendPacket(buildCommitPacket2()); // Commit packet [0x03, 0xfd, 0xfe, 0xff]
+
+        log(`SUCCESS! RGB LEDs updated successfully on device.`, "success");
+        saveLocalData();
+
+      } catch (err) {
+        log(`LED Write Failed: ${err.message}`, "error");
+        console.error(err);
+      }
+    }
+
+
+    // Packet transmission helper (pads to 64 bytes and sends)
+    async function sendPacket(payloadBytes) {
+      const full64Bytes = new Uint8Array(64);
+      full64Bytes.set(payloadBytes);
+      
+      // Print packet to log console for developer aesthetics
+      let hexString = Array.from(full64Bytes)
+        .slice(0, 16) // Show first 16 bytes in console for readability
+        .map(b => b.toString(16).padStart(2, '0').toUpperCase())
+        .join(" ");
+      log(`TX -> Report ID 0x03: ${hexString} ... [64 bytes]`, "sent");
+
+      await hidDevice.sendReport(0x03, full64Bytes);
+      // Brief sleep interval to give micro time to write to flash
+      await new Promise(resolve => setTimeout(resolve, 35));
+    }
+
+    // Calculate LED config byte code
+    function calculateLEDCode(mode, color) {
+      let mCode = 0;
+      let cCode = color;
+
+      if (mode === 'off') {
+        mCode = 0;
+        cCode = 0;
+      } else if (mode === 'backlight') {
+        if (color === 0) { // White Always On
+          mCode = 5;
+          cCode = 0;
+        } else {
+          mCode = 1;
+        }
+      } else if (mode === 'shock') {
+        mCode = 2;
+      } else if (mode === 'shock2') {
+        mCode = 3;
+      } else if (mode === 'press') {
+        mCode = 4;
+      }
+
+      return (cCode << 4) | mCode;
+    }
+
+    // Commit Transaction packets templates
+    function buildCommitPacket1() {
+      const packet = new Uint8Array(64);
+      packet[0] = 0xaa;
+      packet[1] = 0xaa;
+      return packet;
+    }
+
+    function buildCommitPacket2() {
+      const packet = new Uint8Array(64);
+      packet[0] = 0xfd;
+      packet[1] = 0xfe;
+      packet[2] = 0xff;
+      return packet;
+    }
+
+    function buildCommitPacket3() {
+      return buildCommitPacket1(); // Same payload
+    }
+
+    // Maps selected Visual element into target hardware key ID
+    function getTargetKeyId() {
+      if (selectedType === 'key') {
+        // Hardware matrix routing maps physical buttons to distinct internal IDs
+        const keyMap = [4, 8, 12, 3, 7, 11, 2, 6, 10, 1, 5, 9];
+        return keyMap[selectedIndex];
+      } else {
+        // Knobs (0-2) and actions CCW/Click/CW
+        const subAction = selectedKnobActions[selectedIndex];
+        let actionOffset = 0;
+        if (subAction === 'press') actionOffset = 1;
+        if (subAction === 'cw') actionOffset = 2;
+        
+        // Formula: MAX_BUTTONS (15) + 1 + 3 * knobIndex + actionOffset
+        return 16 + 3 * selectedIndex + actionOffset;
+      }
+    }
+
+    // Builds direct config bytes based on mapping type
+    function buildKeyBindingReportBytes(keyId, type, macro) {
+      const reports = [];
+
+      if (type === 'keyboard' || type === 'daw' || type === 'webai') {
+        // Packet 1: Bind start and standard payload
+        const r1 = new Uint8Array(64);
+        r1[0] = 0xfe;
+        r1[1] = keyId;
+        r1[2] = currentLayer + 1;
+        r1[3] = 0x01; // Macro Kind: Keyboard
+        
+        // Single press values
+        r1[9] = 0x01; // length
+        
+        // Modifiers mask
+        let modMask = 0;
+        if (macro.modifiers.includes('ctrl')) modMask |= 0x01;
+        if (macro.modifiers.includes('shift')) modMask |= 0x02;
+        if (macro.modifiers.includes('alt')) modMask |= 0x04;
+        if (macro.modifiers.includes('win')) modMask |= 0x08;
+
+        r1[10] = modMask;
+        r1[11] = macro.code;
+        reports.push(r1);
+
+        // Packet 2: Optional delay packet
+        if (macro.delay > 0) {
+          const r2 = new Uint8Array(64);
+          r2[0] = 0xfe;
+          r2[1] = keyId;
+          r2[2] = currentLayer + 1;
+          r2[3] = 0x05; // Type: Delay
+          r2[4] = macro.delay & 0xff;        // low byte
+          r2[5] = (macro.delay >> 8) & 0xff; // high byte
+          reports.push(r2);
+        }
+
+      } else if (type === 'media') {
+        const r = new Uint8Array(64);
+        r[0] = 0xfe;
+        r[1] = keyId;
+        r[2] = currentLayer + 1;
+        r[3] = 0x02; // Macro Kind: Media
+        
+        const mediaVal = parseInt(macro.hexCode);
+        r[9] = mediaVal & 0xff;        // low byte
+        r[10] = (mediaVal >> 8) & 0xff; // high byte
+        reports.push(r);
+
+      } else if (type === 'mouse') {
+        const r = new Uint8Array(64);
+        r[0] = 0xfe;
+        r[1] = keyId;
+        r[2] = currentLayer + 1;
+        r[3] = 0x03; // Macro Kind: Mouse
+
+        if (macro.action === 'click') {
+          r[9] = 0x01; // Type click
+          
+          let btnMask = 0;
+          if (macro.buttons.includes('left')) btnMask |= 0x01;
+          if (macro.buttons.includes('right')) btnMask |= 0x02;
+          if (macro.buttons.includes('middle')) btnMask |= 0x04;
+          
+          r[11] = btnMask;
+
+        } else if (macro.action === 'move') {
+          r[9] = 0x05; // Type move
+          r[12] = macro.dx;
+          r[13] = macro.dy;
+
+        } else if (macro.action === 'scroll') {
+          r[9] = 0x03; // Type wheel
+          r[14] = macro.wheel;
+
+        } else if (macro.action === 'drag') {
+          r[9] = 0x05; // Type drag
+          
+          let btnMask = 0;
+          if (macro.buttons.includes('left')) btnMask |= 0x01;
+          if (macro.buttons.includes('right')) btnMask |= 0x02;
+          if (macro.buttons.includes('middle')) btnMask |= 0x04;
+          
+          r[11] = btnMask;
+          r[12] = macro.dx;
+          r[13] = macro.dy;
+        }
+        reports.push(r);
+      }
+
+      return reports;
+    }
+
+    // Persistent Configuration LocalStorage backup
+    function saveLocalData() {
+      localStorage.setItem("chroma_mapper_config", JSON.stringify(keyboardConfig));
+      log("Configuration session backed up locally in browser database.", "info");
+    }
+
+    function loadSavedConfig() {
+      const data = localStorage.getItem("chroma_mapper_config");
+      if (data) {
+        try {
+          keyboardConfig = JSON.parse(data);
+          log("Existing profile loaded successfully from local browser storage.", "success");
+          updateLabels();
+          selectControl(selectedType, selectedIndex);
+        } catch (e) {
+          console.error("Failed to parse loaded config", e);
+        }
+      }
+    }
+  </script>
+
+  <footer style="margin-top: 3rem; padding: 2rem; border-top: 1px solid var(--border-glass); background: rgba(10, 11, 16, 0.5); backdrop-filter: blur(10px); text-align: center; font-size: 0.85rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.5rem; align-items: center;">
+    <div>
+      © 2026 <strong>ChromaMapper</strong>. All rights reserved.
+    </div>
+    <div>
+      Created and Developed by <a href="https://jray.me" target="_blank" rel="noopener noreferrer" style="color: var(--accent-pink); text-decoration: none; font-weight: 600; transition: var(--transition-standard);" onmouseover="this.style.color='var(--accent-blue)'" onmouseout="this.style.color='var(--accent-pink)'">Justin Ray</a>.
+    </div>
+  </footer>
+</body>
+</html>
