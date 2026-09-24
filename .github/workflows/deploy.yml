@@ -1,0 +1,60 @@
+name: Deploy ChromaMapper to GitHub Pages
+
+on:
+  # Runs on pushes targeting the main branch
+  push:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare site files
+        run: |
+          mkdir -p _site
+          # Ensure index.html exists for root URL access
+          if [ -f "index.html" ]; then
+            cp index.html _site/index.html
+          else
+            cp chromamapper.html _site/index.html
+          fi
+          # Also keep chromamapper.html accessible at /chromamapper.html
+          if [ -f "chromamapper.html" ]; then
+            cp chromamapper.html _site/chromamapper.html
+          fi
+          # Copy optional asset files
+          if [ -f "README.md" ]; then cp README.md _site/; fi
+          if [ -f "LICENSE" ]; then cp LICENSE _site/; fi
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
